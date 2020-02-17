@@ -11,8 +11,9 @@ const sockets = socketio(server)
 app.use(express.static('public'))
 
 const game = createGame()
+game.start()
 
-console.log(game.state)
+
 
 game.subscribe((command) => {
     console.log(`>Emmiting ${command.type}`)
@@ -30,8 +31,13 @@ sockets.on('connect', (socket) =>{
         game.removePlayer( {playerId : playerId})
         console.log(`Player disconnected with id: ${playerId}`)
     })
-    
 
+    socket.on('move-player', (command)=>{
+        command.playerId = playerId
+        command.type = 'move-player'
+
+        game.movePlayer(command)
+    })
 
 })
 

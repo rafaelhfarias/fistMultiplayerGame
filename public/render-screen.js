@@ -13,10 +13,9 @@ export default function renderScreen(screen,game,requestAnimationFrame,currentPl
         context.fillStyle = 'green'
         context.fillRect(fruit.x, fruit.y, 1, 1)
     }
-
-    const currentPlayer = game.state.players[currentPlayerId]
+    const  currentPlayer = game.state.players[currentPlayerId]
     if(currentPlayer){
-        context.fillStyle = 'F0DB4F'
+        context.fillStyle = '#F0DB4F'
         context.fillRect(currentPlayer.x,currentPlayer.y,1,1)
     }
 

@@ -48,6 +48,9 @@
             console.log(">Receiving Setup from server")
             keyboardListener.registerPlayerId(playerId)
             keyboardListener.subscribe(game.movePlayer)
+            keyboardListener.subscribe((command) => {
+                socket.emit(command.type,command)
+            })
         })
 
         socket.on('add-player', (command) => {
@@ -55,10 +58,22 @@
             game.addPlayer(command)
         })
 
+        socket.on('add-fruit', (command) => {
+            console.log(`Receiving ${command.type} -> ${command.fruitId}`)
+            game.addFruit(command)
+        })
 
         socket.on('remove-player', (command) => {
             console.log(`Receiving ${command.type} -> ${command.playerId}`)
             game.removePlayer(command)
+        })
+
+        socket.on('move-player', (command)=>{
+            console.log(`Moving player ${command.playerId}`)
+            const playerId = socket.id
+            if( playerId !== command.playerId){
+                game.movePlayer(command)
+            }
         })
     </script>
 </body>
